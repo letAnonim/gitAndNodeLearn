@@ -1,0 +1,30 @@
+<nav class="blue darken-4">
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo" style="padding-left:15px;">Home</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+      {{#if isIndex}}
+      <li class="active"><a href="/">Home</a></li>
+      {{else}}
+      <li><a href="/">Home</a></li>
+      {{/if}}
+      {{#if isAbout}}
+      <li class="active"><a href="/about">About</a></li>
+      {{else}}
+      <li><a href="/about">About</a></li>
+      {{/if}}
+
+      {{#if isProfile}}
+      <li class="active"><a href="/user/create">Create</a></li>
+      {{else}}
+      <li><a href="/user/create">Create</a></li>
+      {{/if}}
+      {{#if isAuthorization}}
+      <li class="active"><a href="/user/authorization">Authorization</a></li>
+      {{else}}
+      <li><a href="/user/authorization">Authorization</a></li>
+      {{/if}}
+
+    </ul>
+  </div>
+</nav>

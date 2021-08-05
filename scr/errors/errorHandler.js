@@ -7,3 +7,4 @@ module.exports = function errorHandler(err, req, res, next) {
     .statusCode(err.statusCode)
     .json({ visible: err.visible, message: err.message });
 };
+

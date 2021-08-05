@@ -1,7 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const model = mongoose.model;
+
 const userSchema = new Schema({
+  login: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 30,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 25,
+  },
   name: {
     type: String,
     required: true,
@@ -14,28 +26,17 @@ const userSchema = new Schema({
     min: 1,
     max: 120,
   },
-  login: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 30,
-  },
   email: {
     type: String,
     required: true,
     minlength: 5,
     maxlength: 30,
   },
-  password: {
-    type: String,
-    required: true,
-    minlength: 5,
-    maxlength: 25,
-  },
   photoName: {
     type: String,
     required: false,
+    default: "unknownUser.jpg"
   },
 });
-exports.User = new model("User", userSchema);
-exports.UserSchema = userSchema;
+exports.User = mongoose.model("User", userSchema);
+

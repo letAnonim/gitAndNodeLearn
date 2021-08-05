@@ -6,6 +6,7 @@ module.exports = function (app) {
   app.post("/user/create", photo.single("photo"), userController.postProfile);//add user
   //app.put("/user/:id", photo.single("photo"));//change user
   app.get("/user/profile/:id", userController.getProfile);//get profile by query-string id
+  app.delete("/user/profile/delete/:id", userController.deleteProfile);
 
 }
 

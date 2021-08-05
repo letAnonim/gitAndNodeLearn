@@ -21,28 +21,39 @@ exports.postProfile = function (req, res) {
 
 
 
-exports.getProfile = function (res, req) {
-  let id = req.params.id;
-  let user = userProcess.getUser(id);
+exports.getProfile = async function (req, res) {
+  const id = req.params.id;
+  let user = await userProcess.getUser(id);
   if (!user) {
-    let admin = userProcess.getAdmin(id);
+    let admin = await userProcess.getAdmin(id);
     res.render("profile", {
-      isProfile: true,
       title: "Profile admin",
       getInfo: "You admin-user ",
       name: admin.name,
       age: admin.age,
       email: admin.email,
       photoName: admin.photoName,
+      id: admin._id
+    });
+  } else {
+    res.render("profile", {
+      title: "Profile user",
+      getInfo: "You simple user",
+      name: user.name,
+      age: user.age,
+      email: user.email,
+      photoName: user.photoName,
+      id: user._id
     });
   }
-  res.render("profile", {
-    isProfile: true,
-    title: "Profile user",
-    getInfo: "You simple user",
-    name: user.name,
-    age: user.age,
-    email: user.email,
-    photoName: user.photoName,
-  });
 };
+
+exports.deleteProfile = async function (req, res) {
+  let id = req.params.id;
+  console.log(id);
+  let user = await userProcess.removeUser(id);
+  if (!user) {
+    let admin = await userProcess.removeAdmin(id);
+  }
+  res.redirect("/");
+}

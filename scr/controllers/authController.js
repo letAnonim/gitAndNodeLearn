@@ -14,19 +14,6 @@ exports.postAuthorization = async function (req, res) {
   }
   let _login = req.body.login;
   let _password = req.body.password
-  let user;
-  user = User.findOne({ login: _login, password: _password }, function (err) {
-    if (err) console.log(err);
-  });
-  if (!user) {
-    user = Admin.findOne({ login: _login, password: _password }, function (err) {
-      if (err) console.log(err);
-    });
-    if (!user) {
-      user = AdminLord.findOne({ login: _login, password: _password }, function (err) {
-        if (err) console.log(err);
-      });
-    }
-  }
+  let user = await authProcess.authUser(_login, _password);
   res.redirect(`/user/profile/${user._id}`);
 };

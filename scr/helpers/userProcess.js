@@ -2,12 +2,12 @@ const { User, Admin, AdminLord } = require("../db");
 const config = require("../config");
 
 exports.getUsers = async function getUsers() {
-  let users = await User.find().exec();
+  let users = await User.find();
   return users;
 }
 
 exports.getUser = async function getUser(id) {
-  let user = await User.findById(id).exec();
+  let user = await User.findById(id);
   if (user) {
     return user;
   } else {
@@ -16,7 +16,7 @@ exports.getUser = async function getUser(id) {
 }
 
 exports.getAdmin = async function getAdmin(id) {
-  let admin = await Admin.findById(id).exec();
+  let admin = await Admin.findById(id);
   if (admin) {
     return admin;
   } else {
@@ -72,11 +72,9 @@ exports.removeUser = function (id) {
   if (!id) {
     console.log("Error 400");
   } else {
-    try {
-      User.findByIdAndDelete(id);
-    } catch (err) {
-      console.log(err);
-    }
+    User.findByIdAndDelete(id, function (err, user) {
+      if (err) console.log(err);
+    });
   }
 }
 
@@ -84,11 +82,9 @@ exports.removeAdmin = function (id) {
   if (!id) {
     console.log("Error 400");
   } else {
-    try {
-      Admin.findByIdAndDelete(id);
-    } catch (err) {
-      console.log(err);
-    }
+    Admin.findByIdAndDelete(id, function (err) {
+      if (err) console.log(err);
+    });
   }
 }
 

@@ -1,25 +1,21 @@
 const { User, Admin, AdminLord } = require("../db");
 
 exports.authUser = async function (login, password) {
-  let user = User.findOne({}, function (err) {
-    console.log(err);
-  }).exec();
+  let user;
+  user = await User.findOne({ login: login, password: password }, function (err) {
+    if (err) console.log(err);
+  }).lean();
   if (!user) {
-    let admin = Admin.findOne({}, function (err) {
-      console.log(err);
-    }).exec();
-    if (!admin) {
-      let adminLord = AdminLord.findOne({}, function (err) {
-        console.log(err);
-      }).exec();
-      if (!adminLord) {
-        console.log("User not find");
-        return null;
-      }
-      return adminLord;
+    user = await Admin.findOne({ login: login, password: password }, function (err) {
+      if (err) console.log(err);
+    }).lean();
+    if (!user) {
+      user = await AdminLord.findOne({ login: login, password: password }, function (err) {
+        if (err) console.log(err);
+      }).lean();
     }
-    return admin;
   }
+
   return user;
 }
 

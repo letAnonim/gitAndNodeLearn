@@ -24,3 +24,4 @@ app.listen(config.app.port, () => {
   console.log("Server is start on port " + config.app.port);
 })
 
+app.use(errorHandler)
